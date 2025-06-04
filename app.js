@@ -1,35 +1,37 @@
-const express = require('express');
-const app = express();
+const http = require('http');
+const { MongoClient } = require('mongodb');
+
 const port = 3006;
-
-
-const url = 'mongodb://mongodb:27017/';
+const url = 'mongodb://mongodb:27017/test';
 let isConnected = "no";
 
+console.log("START")
 
-const mongoose = require('mongoose');
+MongoClient.connect(url, { 
+	useNewUrlParser: true, 
+	useUnifiedTopology: true, 
+	serverSelectionTimeoutMS: 1000,
+	connectTimeoutMS: 1000
+   })
+	.then(client => {
+		console.log("Db connection success!");
+		isConnected = "yes";
+		client.close();
+	})
+	.catch(err => {
+		console.error("Db connection error:", err);
+	});
 
-
-mongoose.connect(url, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
+const server = http.createServer((req, res) => {
+	if (req.method === 'GET' && req.url === '/') {
+		res.writeHead(200, { 'Content-Type': 'text/plain' });
+		res.end(isConnected);
+	} else {
+		res.writeHead(404, { 'Content-Type': 'text/plain' });
+		res.end('Not Found');
+	}
 });
 
-const db = mongoose.connection;
-
-db.on('error', (err) => {
-  console.error('Db connection error :', err);
-});
-
-db.once('open', () => {
-  console.log('Db connection success !');
-});
-
-
-app.get('/', (req, res) => {
-  res.send(isConnected);
-});
-
-app.listen(port, () => {
-  console.log(`Server is listening on port ${port}`);
+server.listen(port, () => {
+	console.log(`Server is listening on port ${port}`);
 });
