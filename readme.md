@@ -1,0 +1,1 @@
+ Invoke-RestMethod -Uri http://localhost:3006/buffer -Method POST -Body "Bonjour depuis curl" -ContentType "text/plain" -Headers @{ "Authorization" = "Bearer secret123" }
