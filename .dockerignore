@@ -1,1 +1,10 @@
 node_modules
+pnpm-lock.yaml.backup
+Dockerfile
+.dockerignore
+*.log
+test/
+*.test.js
+.env
+.git
+.gitignore

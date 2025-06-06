@@ -1,16 +1,19 @@
-version: '3'
 services:
-  web:
+  api:
     build:
       context: ./
       dockerfile: Dockerfile
-    container_name: test-nodejs
+    container_name: native-nodejs
     ports:
       - "3006:3006"
     depends_on:
       - mongodb
+    mem_limit: 256m
+    cpus: 0.5
   mongodb:
     image: mongo
     ports:
       - "27017:27017"
     container_name: mongodb
+    mem_limit: 256m
+    cpus: 0.5
