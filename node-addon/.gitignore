@@ -1,0 +1,15 @@
+# Node.js dependencies
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# node-gyp build output
+build/
+*.node
+
+# Visual Studio Code settings (optionnel)
+.vscode/
+
+# MacOS / Linux / Windows system files
+.DS_Store
+Thumbs.db
